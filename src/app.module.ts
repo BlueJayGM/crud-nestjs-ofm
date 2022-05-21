@@ -8,9 +8,10 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { PassportModule } from '@nestjs/passport';
+import { TaskModule } from './task/task.module';
 
 @Module({
-  imports: [CatsModule, TypeOrmModule.forRoot(), UsersModule, AuthModule, PassportModule],
+  imports: [CatsModule, TypeOrmModule.forRoot(), UsersModule, AuthModule, PassportModule, TaskModule],
   controllers: [AppController],
   providers: [{
     provide: APP_GUARD,
