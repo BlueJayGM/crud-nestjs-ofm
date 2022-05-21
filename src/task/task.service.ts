@@ -28,12 +28,22 @@ export class TaskService {
     return await this.taskRepository.find();
   }
 
-  async findOne(id: number) {
-    return await this.taskRepository.findOne({id});
+  async findOne(id: number, userId: number) {
+    const user = await getRepository(User).findOne({id: userId});
+
+    if (!user) throw new BadRequestException('User not found.');
+
+    const task = await this.taskRepository.findOne( {where: {id: id}, relations: ['user'] });
+
+    if (task.user.id == user.id) {
+      task.completed = !task.completed;
+      return this.taskRepository.update({id}, task);
+    } else {
+      throw new BadRequestException('Owner invalidate');
+    }
   }
 
   async update(id: number, updateTaskDto: UpdateTaskDto, userId: number) {
-    console.log(id);
 
     const user = await getRepository(User).findOne({id: userId});
 
