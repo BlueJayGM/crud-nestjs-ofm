@@ -2,9 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Request } from '@nes
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('task')
+@ApiBearerAuth()
 @Controller('task')
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
