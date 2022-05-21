@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, ParseIntPipe, Header } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/auth/public.decorator';
 import { CatsService } from './cats.service';
@@ -21,6 +21,12 @@ export class CatsController {
   @Get()
   findAll() {
     return this.catsService.findAll();
+  }
+
+  @Get()
+  @Header('Content-Type', 'application/pdf')
+  findByPdf() {
+    return this.catsService.catsToPdf();
   }
 
   @Get(':id')
